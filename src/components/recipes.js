@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Pressable,
   Image,
   StyleSheet,
   FlatList,
@@ -46,10 +45,14 @@ const ArticleCard = ({ item, index, navigation }) => {
       >
         <Image source={{ uri: item.recipeImage }} style={styles.articleImage} />
         <Text style={styles.articleText}>
-          {item.recipeName.substring(0, 20) + "..."}
+          {item.recipeName.length > 20
+            ? item.recipeName.slice(0, 20) + "..."
+            : item.recipeName}
         </Text>
         <Text style={styles.articleDescription}>
-          {item.cookingDescription.substring(0, 40) + "..."}
+          {item.cookingDescription.length > 40
+            ? item.cookingDescription.slice(0, 40) + "..."
+            : item.cookingDescription}
         </Text>
       </TouchableOpacity>
     </View>
