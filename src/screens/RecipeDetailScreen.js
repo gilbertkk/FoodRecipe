@@ -309,6 +309,7 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginHorizontal: wp(5),
     marginBottom: 20,
+    paddingHorizontal: wp(4),
   },
   sectionTitle: {
     fontSize: hp(2.8),
