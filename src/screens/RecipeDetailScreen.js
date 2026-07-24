@@ -287,7 +287,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 20,
-    paddingHorizontal: wp(4),
   },
   miscItem: {
     alignItems: "center",
