@@ -14,7 +14,8 @@ import {
 } from "react-native-responsive-screen";
 
 export default function RecipesFormScreen({ route, navigation }) {
-  const { recipeToEdit, recipeIndex, onrecipeEdited } = route.params || {};
+  const { recipeToEdit, recipeIndex, onrecipeEdited, onRecipesUpdated } =
+    route.params || {};
   const [title, setTitle] = useState(recipeToEdit ? recipeToEdit.title : "");
   const [image, setImage] = useState(recipeToEdit ? recipeToEdit.image : "");
   const [description, setDescription] = useState(
@@ -24,16 +25,17 @@ export default function RecipesFormScreen({ route, navigation }) {
   const saverecipe = async () => {
     const newRecipe = { title, image, description };
     try {
-      const existingRecipes = await AsyncStorage.getItem("customRecipes");
+      const existingRecipes = await AsyncStorage.getItem("customrecipes");
       const recipes = existingRecipes ? JSON.parse(existingRecipes) : [];
       // If editing a recipe, update it; otherwise, add a new one
       if (recipeToEdit !== undefined) {
         recipes[recipeIndex] = newRecipe;
-        await AsyncStorage.setItem("customRecipes", JSON.stringify(recipes));
-        if (onRecipeEdited) onRecipeEdited(); // Notify the edit
+        await AsyncStorage.setItem("customrecipes", JSON.stringify(recipes));
+        if (onrecipeEdited) onrecipeEdited(); // Notify the edit
       } else {
         recipes.push(newRecipe);
-        await AsyncStorage.setItem("customRecipes", JSON.stringify(recipes));
+        await AsyncStorage.setItem("customrecipes", JSON.stringify(recipes));
+        if (onRecipesUpdated) onRecipesUpdated(); // Notify the repices update
       }
       navigation.goBack(); // Return to the previous screen
     } catch (error) {
