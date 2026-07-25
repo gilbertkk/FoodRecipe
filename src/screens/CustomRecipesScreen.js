@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
@@ -28,11 +28,23 @@ export default function CustomRecipesScreen() {
   );
   console.log("favoriteRecipe from custom", favoriteRecipe);
 
-  const isFavourite = favoriteRecipe.includes({
-    recipeImage: recipe.image,
-    recipeTitle: recipe.title,
-    cookingDescription: recipe.description,
-  }); // Adjust this according to your recipe structure
+  const [isFavourite, setIsFavourite] = useState(
+    favoriteRecipe.includes({
+      category: "Custom",
+      idFood: `custom_${index}`,
+      idCategory: "1",
+      recipeName: recipe.title,
+      recipeInstructions: recipe.description,
+      recipeImage: recipe.image,
+      recipeId: `custom_${index}`,
+      alternateDrink: null,
+      recipeCategory: "Custom",
+      recipeOrigin: "Custom",
+      cookingDescription: "This is a custom recipe",
+      recipeTags: "Custom,Recipe",
+      ingredients: [],
+    })
+  ); // Adjust this according to your recipe structure
 
   if (!recipe) {
     return (
@@ -45,12 +57,22 @@ export default function CustomRecipesScreen() {
   const handleToggleFavorite = () => {
     dispatch(
       toggleFavorite({
-        recipeImage: recipe.image,
-        recipeTitle: recipe.title,
-        cookingDescription: recipe.description,
+        category: "Custom",
         idFood: `custom_${index}`,
+        idCategory: "1",
+        recipeName: recipe.title,
+        recipeInstructions: recipe.description,
+        recipeImage: recipe.image,
+        recipeId: `custom_${index}`,
+        alternateDrink: null,
+        recipeCategory: "Custom",
+        recipeOrigin: "Custom",
+        cookingDescription: "This is a custom recipe",
+        recipeTags: "Custom,Recipe",
+        ingredients: [],
       })
     ); // Adjust the action to handle recipe
+    setIsFavourite(!isFavourite);
   };
 
   return (
@@ -71,6 +93,23 @@ export default function CustomRecipesScreen() {
             ]}
           />
         )}
+        {
+          // if there is no image, for render purpose
+          !recipe.image && (
+            <View
+              style={[
+                styles.recipeImage,
+                {
+                  backgroundColor: "gray",
+                  justifyContent: "center",
+                  alignItems: "center",
+                },
+              ]}
+            >
+              <Text style={{ color: "white", fontSize: 18 }}>No Image</Text>
+            </View>
+          )
+        }
       </View>
       <View style={styles.topButtonsContainer} testID="topButtonsContainer">
         <TouchableOpacity

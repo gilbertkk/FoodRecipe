@@ -102,10 +102,29 @@ export default function MyRecipeScreen() {
                       style={styles.recipeImage}
                     />
                   )}
+                  {
+                    // if there is no image, for render purpose
+                    !recipe.image && (
+                      <View
+                        style={[
+                          styles.recipeImage,
+                          {
+                            backgroundColor: "gray",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "white", fontSize: 18 }}>
+                          No Image
+                        </Text>
+                      </View>
+                    )
+                  }
                   <Text style={styles.recipeTitle}>{recipe.title}</Text>
                   <Text style={styles.recipeDescription} testID="recipeDescp">
-                    {recipe.description.length > 40
-                      ? `${recipe.description.slice(0, 40)}...`
+                    {recipe.description.length > 50
+                      ? `${recipe.description.slice(0, 50)}...`
                       : recipe.description}
                   </Text>
                 </TouchableOpacity>
